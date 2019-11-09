@@ -1,0 +1,302 @@
+#---------------------------------------------
+#|              V 1.0.0                       |
+#|    Skript von Altonos                      |
+#|  Letzte änderung am 09.11.2019 | 15:02 uhr |
+#---------------------------------------------
+
+options:
+  #Speed für die Spitzhacke
+
+
+
+
+
+command /mining:
+  trigger:
+
+    if {redstone::off::%player%} is not set:
+      set {redstone::off::%player%} to lime stained glass pane
+      execute player command "/mining"
+
+    if {cobblestone::off::%player%} is not set:
+      set {cobblestone::off::%player%} to lime stained glass pane
+      execute player command "/mining"
+
+    if {lapis::off::%player%} is not set:
+      set {lapis::off::%player%} to lime stained glass pane
+      execute player command "/mining"
+
+    if {coal::off::%player%} is not set:
+      set {coal::off::%player%} to lime stained glass pane
+      execute player command "/mining"
+
+    if {gold::off::%player%} is not set:
+      set {gold::off::%player%} to lime stained glass pane
+      execute player command "/mining"
+
+    if {iron::off::%player%} is not set:
+      set {iron::off::%player%} to lime stained glass pane
+      execute player command "/mining"
+
+    if {diamond::off::%player%} is not set:
+      set {diamond::off::%player%} to lime stained glass pane
+      execute player command "/mining"
+
+    open chest with 6 rows named "&8Mining" to player
+    wait 1 ticks
+    set slot 0 of  player's current inventory to gray stained glass pane
+    set slot 1 of  player's current inventory to {cobblestone::off::%player%} with lore "&6Off"
+    set slot 2 of  player's current inventory to {redstone::off::%player%} with lore "&6Off"
+    set slot 3 of  player's current inventory to {lapis::off::%player%} with lore "&6Off"
+    set slot 4 of  player's current inventory to {coal::off::%player%} with lore "&6Off"
+    set slot 5 of  player's current inventory to {gold::off::%player%} with lore "&6Off"
+    set slot 6 of  player's current inventory to {iron::off::%player%} with lore "&6Off"
+    set slot 7 of  player's current inventory to {diamond::off::%player%} with lore "&6Off"
+    set slot 8 of  player's current inventory to gray stained glass pane
+    set slot 9 of  player's current inventory to gray stained glass pane
+
+
+    set slot 10 of  player's current inventory to cobblestone with lore "%{cobblestone::menge::%player%}%"
+    set slot 11 of  player's current inventory to redstone ore with lore "%{redstone::menge::%player%}%"
+    set slot 12 of  player's current inventory to lapis lazuli ore with lore "%{lapis::menge::%player%}%"
+    set slot 13 of  player's current inventory to coal with lore "%{coal::menge::%player%}%"
+    set slot 14 of  player's current inventory to gold ore with lore "%{gold::menge::%player%}%"
+    set slot 15 of  player's current inventory to iron ore with lore "%{iron::menge::%player%}%"
+    set slot 16 of  player's current inventory to diamond with lore "%{diamond::menge::%player%}%"
+
+    set slot 17 of  player's current inventory to gray stained glass pane
+    set slot 18 of  player's current inventory to gray stained glass pane
+    set slot 19 of  player's current inventory to {cobblestone::off::%player%} with lore "&6On"
+    set slot 20 of  player's current inventory to {redstone::off::%player%} with lore "&6On"
+    set slot 21 of  player's current inventory to {lapis::off::%player%} with lore "&6On"
+    set slot 22 of  player's current inventory to {coal::off::%player%} with lore "&6On"
+    set slot 23 of  player's current inventory to {gold::off::%player%} with lore "&6On"
+    set slot 24 of  player's current inventory to {iron::off::%player%} with lore "&6On"
+    set slot 25 of  player's current inventory to {diamond::off::%player%} with lore "&6On"
+    set slot 26 of  player's current inventory to gray stained glass pane
+    set slot 27 of  player's current inventory to gray stained glass pane
+    set slot 28 of  player's current inventory to gray stained glass pane
+
+    set slot 29 of  player's current inventory to wood pickaxe with lore "§8Eine einfache Holzspitzhacke. +1 speed"
+    set slot 30 of  player's current inventory to stone pickaxe with lore "§8Eine gute Steinspitzhacke. +2 speed"
+    set slot 31 of  player's current inventory to iron pickaxe with lore "§8Eine starke Eisenspitzhacke. +4 speed"
+    set slot 32 of  player's current inventory to gold pickaxe with lore "§8Eine sehr starke Goldspitzhacke. +8 speed"
+    set slot 33 of  player's current inventory to diamond pickaxe with lore "§8Eine perfekte diamantspitzhacke. +16 speed"
+
+    set slot 34 of  player's current inventory to gray stained glass pane
+    set slot 35 of  player's current inventory to gray stained glass pane
+    set slot 36 of  player's current inventory to gray stained glass pane
+    set slot 37 of  player's current inventory to gray stained glass pane
+
+    set slot 38 of  player's current inventory to lime stained glass pane named "&6Buy" with lore "§7Kosten: 64 Holz"
+    set slot 39 of  player's current inventory to lime stained glass pane named "&6Buy" with lore "§7Kosten: 64 Holz,Stein"
+    set slot 40 of  player's current inventory to lime stained glass pane named "&6Buy" with lore "§7Kosten: 64 Holz,Stein,Eisen"
+    set slot 41 of  player's current inventory to lime stained glass pane named "&6Buy" with lore "§7Kosten: 64 Holz,Stein,Eisen,Gold"
+    set slot 42 of  player's current inventory to lime stained glass pane named "&6Buy" with lore "§7Kosten: 64 Holz,Stein,Eisen,Gold,Diamanten"
+
+    set slot 43 of  player's current inventory to gray stained glass pane
+    set slot 44 of  player's current inventory to gray stained glass pane
+
+    set slot 45 of  player's current inventory to gray stained glass pane
+    set slot 46 of  player's current inventory to gray stained glass pane
+    set slot 47 of  player's current inventory to gray stained glass pane
+    set slot 48 of  player's current inventory to gray stained glass pane
+    set slot 49 of  player's current inventory to red stained glass pane named "&6Claim"
+    set slot 50 of  player's current inventory to gray stained glass pane
+    set slot 51 of  player's current inventory to gray stained glass pane
+    set slot 51 of  player's current inventory to gray stained glass pane
+    set slot 52 of  player's current inventory to gray stained glass pane
+    set slot 53 of  player's current inventory to gray stained glass pane
+
+
+on inventory click:
+  if inventory name of current inventory of player is "&8Mining":
+    cancel Event
+
+
+    if clicked slot is 7:
+      set {diamond::off::%player%} to red stained glass pane
+      set {diamond::menge::%player%} to "0"
+      execute player command "/mining"
+
+    if clicked slot is 25:
+      set {diamond::off::%player%} to lime stained glass pane
+      delete {diamond::menge::%player%}
+      execute player command "/mining"
+
+    if clicked slot is 6:
+      set {iron::off::%player%} to red stained glass pane
+      set {iron::menge::%player%} to "0"
+      execute player command "/mining"
+
+    if clicked slot is 24:
+      set {iron::off::%player%} to lime stained glass pane
+      delete {iron::menge::%player%}
+      execute player command "/mining"
+
+    if clicked slot is 5:
+      set {gold::off::%player%} to red stained glass pane
+      set {gold::menge::%player%} to "0"
+      execute player command "/mining"
+
+    if clicked slot is 23:
+      set {gold::off::%player%} to lime stained glass pane
+      delete {gold::menge::%player%}
+      execute player command "/mining"
+
+    if clicked slot is 4:
+      set {coal::off::%player%} to red stained glass pane
+      set {coal::menge::%player%} to "0"
+      execute player command "/mining"
+
+    if clicked slot is 22:
+      set {coal::off::%player%} to lime stained glass pane
+      delete {coal::menge::%player%}
+      execute player command "/mining"
+
+
+    if clicked slot is 3:
+      set {lapis::off::%player%} to red stained glass pane
+      set {lapis::menge::%player%} to "0"
+      execute player command "/mining"
+
+    if clicked slot is 21:
+      set {lapis::off::%player%} to lime stained glass pane
+      delete {lapis::menge::%player%}
+      execute player command "/mining"
+
+    if clicked slot is 2:
+      set {redstone::off::%player%} to red stained glass pane
+      set {redstone::menge::%player%} to "0"
+      execute player command "/mining"
+
+    if clicked slot is 20:
+      set {redstone::off::%player%} to lime stained glass pane
+      delete {redstone::menge::%player%}
+      execute player command "/mining"
+
+
+
+    if clicked slot is 1:
+      set {cobblestone::off::%player%} to red stained glass pane
+      set {cobblestone::menge::%player%} to "0"
+      execute player command "/mining"
+
+    if clicked slot is 19:
+      set {cobblestone::off::%player%} to lime stained glass pane
+      delete {cobblestone::menge::%player%}
+      execute player command "/mining"
+
+    if clicked slot is 49:
+      execute player command "/item cobblestone %{cobblestone::menge::%player%}%"
+      execute player command "/item coal %{coal::menge::%player%}%"
+      execute player command "/item redstone %{redstone::menge::%player%}%"
+      execute player command "/item gold ore %{gold::menge::%player%}%"
+      execute player command "/item iron ore %{iron::menge::%player%}%"
+      execute player command "/item diamond %{diamond::menge::%player%}%"
+
+      delete {diamond::menge::%player%}
+      delete {iron::menge::%player%}
+      delete {gold::menge::%player%}
+      delete {redstone::menge::%player%}
+      delete {coal::menge::%player%}
+      delete {cobblestone::menge::%player%}
+
+
+    if clicked slot is 38:
+      if player has 64 of any log in his inventory:
+        remove 64 any log from player's inventory
+        add 1 to {loop:mining%player%}
+        message "&6Du hast dir eine Holzspitzhacke gekauft!"
+
+    if clicked slot is 39:
+      if player has 64 any log and 64 stone in his inventory:
+        remove 64 any log and 64 stone from player's inventory
+        add 2 to {loop:mining%player%}
+        message "&6Du hast dir eine Steinspitzhacke gekauft!"
+
+    if clicked slot is 40:
+      if player has 64 any log and 64 stone and 64 iron ingots in his inventory:
+        remove 64 any log and 64 stone and 64 iron ingots from player's inventory
+        add 4 to {loop:mining%player%}
+        message "&6Du hast dir eine Eisenspitzhacke gekauft!"
+
+    if clicked slot is 41:
+      if player has 64 any log and 64 stone and 64 iron ingot and 64 gold ingot in his inventory:
+        remove 64 any log and 64 stone and 64 iron ingot and 64 gold ingot from player's inventory
+        add 8 to {loop:mining%player%}
+        message "&6Du hast dir eine Goldspitzhacke gekauft!"
+
+    if clicked slot is 42:
+      if player has 64 any log and 64 stone and 64 iron ingot and 64 diamond and 64 gold ingot in his inventory:
+        remove 64 any log and 64 stone and 64 iron ingot and 64 diamond and 64 gold ingot from player's inventory
+        add 16 to {loop:mining%player%}
+        message "&6Du hast dir eine Diamantspitzhacke gekauft!"
+
+
+
+
+
+
+every 30 seconds:
+  loop all players:
+    if {loop:mining%loop-player%} >= 1:
+      loop {loop:mining%loop-player%} times:
+
+        wait 1 ticks
+        Chance of 1%:
+          if {diamond::off::%loop-player%} is lime stained glass pane:
+            add 1 to {diamond::menge::%loop-player%}
+
+        chance of 8%:
+          if {iron::off::%loop-player%} is lime stained glass pane:
+            add 1 to {iron::menge::%loop-player%}
+
+        chance of 8%:
+          if {gold::off::%loop-player%} is lime stained glass pane:
+            add 1 to {gold::menge::%loop-player%}
+
+        chance of 4%:
+          if {redstone::off::%loop-player%} is lime stained glass pane:
+            add 1 to {redstone::menge::%loop-player%}
+
+        chance of 10%:
+          if {coal::off::%loop-player%} is lime stained glass pane:
+            add 1 to {coal::menge::%loop-player%}
+
+        chance of 5%:
+          if {lapis::off::%loop-player%} is lime stained glass pane:
+            add 1 to {lapis::menge::%loop-player%}
+
+        chance of 100%:
+          if {cobblestone::off::%loop-player%} is lime stained glass pane:
+            add 1 to {cobblestone::menge::%loop-player%}
+
+
+command /item [<items>] [<number>]:
+  permission: sk.Admin
+  trigger:
+    loop arg-2 times:
+      give arg-1 to the player
+
+
+
+
+
+
+every 15 ticks:
+  loop all players:
+    Scoreboard(loop-player)
+
+function Scoreboard(p: player):
+  wipe {_p}'s sidebar
+  set name of sidebar of {_p} to "&aScoreboard"
+  set score "____________" in sidebar of {_p} to 9
+  set score "&6 %{loop:mining%{_p}%}% Speed" in sidebar of {_p} to 8
+  set score "&6 %{cobblestone::menge::%{_p}%}% cobblestone" in sidebar of {_p} to 7
+  set score "&6 %{coal::menge::%{_p}%}% coal" in sidebar of {_p} to 6
+  set score "&6 %{redstone::menge::%{_p}%}% redstone" in sidebar of {_p} to 5
+  set score "&6 %{gold::menge::%{_p}%}% gold" in sidebar of {_p} to 4
+  set score "&6 %{iron::menge::%{_p}%}% Eisen" in sidebar of {_p} to 3
+  set score "&6 %{lapis::menge::%{_p}%}% Lapis" in sidebar of {_p} to 2
+  set score "&6 %{diamond::menge::%{_p}%}% diamond" in sidebar of {_p} to 1
