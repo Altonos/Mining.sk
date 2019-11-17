@@ -1,7 +1,7 @@
 #---------------------------------------------
-#|              V 1.0.0                       |
+#|              V 1.0.1                       |
 #|    Skript von Altonos                      |
-#|  Letzte änderung am 09.11.2019 | 15:02 uhr |
+#|  Letzte änderung am 17.11.2019 | 10:50 uhr |
 #---------------------------------------------
 
 options:
@@ -188,12 +188,17 @@ on inventory click:
       execute player command "/mining"
 
     if clicked slot is 49:
+     # if {miningdrop::%player%} is set:
+       # add {cobblestone::menge::%player%} to {miningdrop::%player%}'s inventory
+        #stop
+
       execute player command "/item cobblestone %{cobblestone::menge::%player%}%"
       execute player command "/item coal %{coal::menge::%player%}%"
       execute player command "/item redstone %{redstone::menge::%player%}%"
       execute player command "/item gold ore %{gold::menge::%player%}%"
       execute player command "/item iron ore %{iron::menge::%player%}%"
       execute player command "/item diamond %{diamond::menge::%player%}%"
+      execute player command "/item lapis lazuli %{lapis::menge::%player%}%"
 
       delete {diamond::menge::%player%}
       delete {iron::menge::%player%}
@@ -201,6 +206,7 @@ on inventory click:
       delete {redstone::menge::%player%}
       delete {coal::menge::%player%}
       delete {cobblestone::menge::%player%}
+      delete {lapis::menge::%player%}
 
 
     if clicked slot is 38:
@@ -243,7 +249,14 @@ every 30 seconds:
     if {loop:mining%loop-player%} >= 1:
       loop {loop:mining%loop-player%} times:
 
-        wait 1 ticks
+
+        wait 8 ticks
+        chance of 3%:
+          remove 1 from {loop:mining%loop-player%} #<--------Hier fehlt noch was!
+          send "[&6Mining&f] &7Oh, Eine Spitzhacke von dir ist zerbrochen. [&C-1 speed&f]" to loop-player
+
+
+        
         Chance of 1%:
           if {diamond::off::%loop-player%} is lime stained glass pane:
             add 1 to {diamond::menge::%loop-player%}
@@ -281,6 +294,14 @@ command /item [<items>] [<number>]:
 
 
 
+
+
+#Command /Miningchest:
+  #trigger:
+   # delete {miningdrop::%player%}
+  #  set {miningdrop::%player%} to player's location
+  #  set {miningdrop::%player%} to block at {miningdrop::%player%}
+  #  set block at {miningdrop::%player%} to chest
 
 
 
