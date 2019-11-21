@@ -1,14 +1,33 @@
 #---------------------------------------------
-#|              V 1.0.1                       |
+#|              V 1.0.3                       |
 #|    Skript von Altonos                      |
-#|  Letzte änderung am 17.11.2019 | 10:50 uhr |
+#|  Letzte änderung am 21.11.2019 | 15:07 uhr |
 #---------------------------------------------
 
+
+ 
+
+
 options:
-  #Speed für die Spitzhacke
+
+  #-------------------------------------------|
+  #! Config für Spitzhacken                   
+  #                                           |
+  Sp1: 1      #<-- Wood    |Standardwert 1    |
+  Sp2: 2      #<-- Stone   |Standardwert 2    |
+  Sp3: 4      #<-- Iron    |Standardwert 4    |
+  Sp4: 8      #<-- Gold    |Standardwert 8    |
+  Sp5: 16     #<-- diamond |Standardwert 16   |
+  #-------------------------------------------|
 
 
 
+
+
+
+command /speed:
+  trigger:
+    send "[&6Mining&f]&7Du hast grade &6%{loop:mining%player%}%&7 mining speed!" to player
 
 
 command /mining:
@@ -77,11 +96,11 @@ command /mining:
     set slot 27 of  player's current inventory to gray stained glass pane
     set slot 28 of  player's current inventory to gray stained glass pane
 
-    set slot 29 of  player's current inventory to wood pickaxe with lore "§8Eine einfache Holzspitzhacke. +1 speed"
-    set slot 30 of  player's current inventory to stone pickaxe with lore "§8Eine gute Steinspitzhacke. +2 speed"
-    set slot 31 of  player's current inventory to iron pickaxe with lore "§8Eine starke Eisenspitzhacke. +4 speed"
-    set slot 32 of  player's current inventory to gold pickaxe with lore "§8Eine sehr starke Goldspitzhacke. +8 speed"
-    set slot 33 of  player's current inventory to diamond pickaxe with lore "§8Eine perfekte diamantspitzhacke. +16 speed"
+    set slot 29 of  player's current inventory to wood pickaxe with lore "§8Eine einfache Holzspitzhacke. +{@Sp1} speed"
+    set slot 30 of  player's current inventory to stone pickaxe with lore "§8Eine gute Steinspitzhacke. +{@Sp2} speed"
+    set slot 31 of  player's current inventory to iron pickaxe with lore "§8Eine starke Eisenspitzhacke. +{@Sp3} speed"
+    set slot 32 of  player's current inventory to gold pickaxe with lore "§8Eine sehr starke Goldspitzhacke. +{@Sp4} speed"
+    set slot 33 of  player's current inventory to diamond pickaxe with lore "§8Eine perfekte diamantspitzhacke. +{@Sp5} speed"
 
     set slot 34 of  player's current inventory to gray stained glass pane
     set slot 35 of  player's current inventory to gray stained glass pane
@@ -106,11 +125,11 @@ command /mining:
     set slot 51 of  player's current inventory to gray stained glass pane
     set slot 51 of  player's current inventory to gray stained glass pane
     set slot 52 of  player's current inventory to gray stained glass pane
-    set slot 53 of  player's current inventory to gray stained glass pane
+    set slot 53 of  player's current inventory to blue stained glass pane
 
 
 on inventory click:
-  if inventory name of current inventory of player is "&8Mining":
+  if inventory name of current inventory of player is "&8Mining":  
     cancel Event
 
 
@@ -208,35 +227,43 @@ on inventory click:
       delete {cobblestone::menge::%player%}
       delete {lapis::menge::%player%}
 
+    if clicked slot is 53:
+      remove block from {miningdrop::%player%}
+      #set block at location at {miningdrop::%player%} in world "world" to air
+      delete {miningdrop::%player%}
+      send "[&6Mining&f]&7 Die miningchest wurde gelöscht!"
+      broadcast "%{miningdrop::%player%}%"
+
+
 
     if clicked slot is 38:
       if player has 64 of any log in his inventory:
         remove 64 any log from player's inventory
-        add 1 to {loop:mining%player%}
+        add {@Sp1} to {loop:mining%player%}
         message "&6Du hast dir eine Holzspitzhacke gekauft!"
 
     if clicked slot is 39:
       if player has 64 any log and 64 stone in his inventory:
         remove 64 any log and 64 stone from player's inventory
-        add 2 to {loop:mining%player%}
+        add {@Sp2} to {loop:mining%player%}
         message "&6Du hast dir eine Steinspitzhacke gekauft!"
 
     if clicked slot is 40:
       if player has 64 any log and 64 stone and 64 iron ingots in his inventory:
         remove 64 any log and 64 stone and 64 iron ingots from player's inventory
-        add 4 to {loop:mining%player%}
+        add {@Sp3} to {loop:mining%player%}
         message "&6Du hast dir eine Eisenspitzhacke gekauft!"
 
     if clicked slot is 41:
       if player has 64 any log and 64 stone and 64 iron ingot and 64 gold ingot in his inventory:
         remove 64 any log and 64 stone and 64 iron ingot and 64 gold ingot from player's inventory
-        add 8 to {loop:mining%player%}
+        add {@Sp4} to {loop:mining%player%}
         message "&6Du hast dir eine Goldspitzhacke gekauft!"
 
     if clicked slot is 42:
       if player has 64 any log and 64 stone and 64 iron ingot and 64 diamond and 64 gold ingot in his inventory:
         remove 64 any log and 64 stone and 64 iron ingot and 64 diamond and 64 gold ingot from player's inventory
-        add 16 to {loop:mining%player%}
+        add {@Sp5} to {loop:mining%player%}
         message "&6Du hast dir eine Diamantspitzhacke gekauft!"
 
 
@@ -244,46 +271,76 @@ on inventory click:
 
 
 
-every 30 seconds:
+every 10 seconds:
   loop all players:
     if {loop:mining%loop-player%} >= 1:
       loop {loop:mining%loop-player%} times:
+        #broadcast "&6loop!"
+        wait 2 ticks
+        mining(loop-player)
 
 
-        wait 8 ticks
-        chance of 3%:
-          remove 1 from {loop:mining%loop-player%} #<--------Hier fehlt noch was!
-          send "[&6Mining&f] &7Oh, Eine Spitzhacke von dir ist zerbrochen. [&C-1 speed&f]" to loop-player
+function mining(p: player):
+  chance of 0.1%:
+    remove 1 from {loop:mining%{_p}%} #<--------Hier fehlt noch was!
+    send "[&6Mining&f] &7Oh, Eine Spitzhacke von dir ist zerbrochen. [&C-1 speed&f]" to {_p}
 
+  Chance of 0.5%:
+    if {miningdrop::%{_p}%} is set:
+      add 1 diamond to {miningdrop::%{_p}%}'s inventory 
+      stop
 
-        
-        Chance of 1%:
-          if {diamond::off::%loop-player%} is lime stained glass pane:
-            add 1 to {diamond::menge::%loop-player%}
+    if {diamond::off::%{_p}%} is lime stained glass pane:
+      add 1 to {diamond::menge::%{_p}%}
 
-        chance of 8%:
-          if {iron::off::%loop-player%} is lime stained glass pane:
-            add 1 to {iron::menge::%loop-player%}
+  chance of 8%:
+    if {miningdrop::%{_p}%} is set:
+      add 1 iron ore to {miningdrop::%{_p}%}'s inventory 
+      stop
 
-        chance of 8%:
-          if {gold::off::%loop-player%} is lime stained glass pane:
-            add 1 to {gold::menge::%loop-player%}
+    if {iron::off::%{_p}%} is lime stained glass pane:
+      add 1 to {iron::menge::%{_p}%}
 
-        chance of 4%:
-          if {redstone::off::%loop-player%} is lime stained glass pane:
-            add 1 to {redstone::menge::%loop-player%}
+  chance of 8%:
+    if {miningdrop::%{_p}%} is set:
+      add 1 gold ore to {miningdrop::%{_p}%}'s inventory 
+      stop
 
-        chance of 10%:
-          if {coal::off::%loop-player%} is lime stained glass pane:
-            add 1 to {coal::menge::%loop-player%}
+    if {gold::off::%{_p}%} is lime stained glass pane:
+      add 1 to {gold::menge::%{_p}%}
 
-        chance of 5%:
-          if {lapis::off::%loop-player%} is lime stained glass pane:
-            add 1 to {lapis::menge::%loop-player%}
+  chance of 4%:
+    if {miningdrop::%{_p}%} is set:
+      add 1 redstone to {miningdrop::%{_p}%}'s inventory 
+      stop
 
-        chance of 100%:
-          if {cobblestone::off::%loop-player%} is lime stained glass pane:
-            add 1 to {cobblestone::menge::%loop-player%}
+    if {redstone::off::%{_p}%} is lime stained glass pane:
+      add 1 to {redstone::menge::%{_p}%}
+
+  chance of 10%:
+    if {miningdrop::%{_p}%} is set:
+      add 1 coal to {miningdrop::%{_p}%}'s inventory 
+      stop
+
+    if {coal::off::%{_p}%} is lime stained glass pane:
+      add 1 to {coal::menge::%{_p}%}
+
+  chance of 5%:
+    if {miningdrop::%{_p}%} is set:
+      add 1 lapis lazuli to {miningdrop::%{_p}%}'s inventory 
+      stop
+
+    if {lapis::off::%{_p}%} is lime stained glass pane:
+      add 1 to {lapis::menge::%{_p}%}
+
+  chance of 100%:
+    if {cobblestone::off::%{_p}%} is lime stained glass pane:
+      if {miningdrop::%{_p}%} is set:
+        add 1 cobblestone to {miningdrop::%{_p}%}'s inventory 
+        stop
+
+    if {cobblestone::off::%{_p}%} is lime stained glass pane:
+      add 1 to {cobblestone::menge::%{_p}%}
 
 
 command /item [<items>] [<number>]:
@@ -296,28 +353,46 @@ command /item [<items>] [<number>]:
 
 
 
-#Command /Miningchest:
-  #trigger:
-   # delete {miningdrop::%player%}
-  #  set {miningdrop::%player%} to player's location
-  #  set {miningdrop::%player%} to block at {miningdrop::%player%}
-  #  set block at {miningdrop::%player%} to chest
+Command /Miningchest:
+  trigger:
+    delete {miningdrop::%player%}
+    set {miningdrop::%player%} to player's location
+    set {miningdrop::%player%} to block at {miningdrop::%player%}
+    set block at {miningdrop::%player%} to chest
+
+#on break of chest:
+  
+
+
+
+
+
 
 
 
 every 15 ticks:
   loop all players:
     Scoreboard(loop-player)
+    if {miningdrop::%loop-player%} is set:
+      set {miningchest::%loop-player%} to "On"
+      stop
+    set {miningchest::%loop-player%} to "Off"
+
+
+
 
 function Scoreboard(p: player):
+  wait 5 ticks
   wipe {_p}'s sidebar
   set name of sidebar of {_p} to "&aScoreboard"
-  set score "____________" in sidebar of {_p} to 9
-  set score "&6 %{loop:mining%{_p}%}% Speed" in sidebar of {_p} to 8
-  set score "&6 %{cobblestone::menge::%{_p}%}% cobblestone" in sidebar of {_p} to 7
-  set score "&6 %{coal::menge::%{_p}%}% coal" in sidebar of {_p} to 6
-  set score "&6 %{redstone::menge::%{_p}%}% redstone" in sidebar of {_p} to 5
-  set score "&6 %{gold::menge::%{_p}%}% gold" in sidebar of {_p} to 4
-  set score "&6 %{iron::menge::%{_p}%}% Eisen" in sidebar of {_p} to 3
-  set score "&6 %{lapis::menge::%{_p}%}% Lapis" in sidebar of {_p} to 2
-  set score "&6 %{diamond::menge::%{_p}%}% diamond" in sidebar of {_p} to 1
+  #set score "&6 Mining chest is " in sidebar of {_p} to 9
+  set score "&6 %{loop:mining%{_p}%}% Speed" in sidebar of {_p} to 9
+  set score "&6 %{cobblestone::menge::%{_p}%}% cobblestone" in sidebar of {_p} to 8
+  set score "&6 %{coal::menge::%{_p}%}% coal" in sidebar of {_p} to 7
+  set score "&6 %{redstone::menge::%{_p}%}% redstone" in sidebar of {_p} to 6
+  set score "&6 %{gold::menge::%{_p}%}% gold" in sidebar of {_p} to 5
+  set score "&6 %{iron::menge::%{_p}%}% Eisen" in sidebar of {_p} to 4
+  set score "&6 %{lapis::menge::%{_p}%}% Lapis" in sidebar of {_p} to 3
+  set score "&6 %{diamond::menge::%{_p}%}% diamond" in sidebar of {_p} to 2
+  set score "&6 Miningchest %{miningchest::%{_p}%}% " in sidebar of {_p} to 1
+  
