@@ -1,7 +1,7 @@
 #---------------------------------------------
-#|              V 1.0.4                       |
+#|              V 1.0.5                       |
 #|    Skript von Altonos                      |
-#|  Letzte änderung am 24.11.2019 | 16:00 uhr |
+#|  Letzte änderung am 1.12.2019 | 15:55 uhr  |
 #---------------------------------------------
 
 
@@ -33,14 +33,26 @@ options:
   diamond: 0.5       #<-- diamond        |Standardwert 16  |
   #--------------------------------------------------------|
 
+  #--------------------------------------------------------------------------------------------|
+  #! Sonstiges
+  #   
+  maxminingspeed: 100     #Maximaler mining speed                            |Standardwert 100 |
+  RemoveMiningspeed: 1    #<-- Wie viel Miningspeed Abgezogen werden soll    |Standardwert 1   |
+  RemoveMiningspeedC: 0.1 #<-- Wie oft soll das passieren(Angabe in %)       |Standardwert 0.1 | 
+  #! Scoreboard                                                                                            
+  Scoreboard: true                                                           |Standardwert true|
+  #--------------------------------------------------------------------------------------------|
+
+
+
 
 
 
 on join:
-  log "%{loop:mining%player%}% | %player%" in "Mininglog.txt"
+  log "%{loop:mining%player%}% Miningspeed| %player%" in "Mininglog.txt"
 
 on disconnect:
-  log "%{loop:mining%player%}% | %player%" in "Mininglog.txt"
+  log "%{loop:mining%player%}% Miningspeed| %player%" in "Mininglog.txt"
 
 
 
@@ -279,34 +291,59 @@ on inventory click:
 
 
     if clicked slot is 38:
+      if {loop:mining%player%} > {@maxminingspeed}:
+        stop
+        send "&6Du  hast mehr als {@max::miningspeed} Miningspeed"
+
       if player has 64 of any log in his inventory:
         remove 64 any log from player's inventory
         add {@Sp1} to {loop:mining%player%}
         message "&6Du hast dir eine Holzspitzhacke gekauft!"
+        log "%player% hat eine Holzspitzhacke gekauft [+{@Sp1} Miningspeed]" in "Mininglog.txt"
 
     if clicked slot is 39:
+      if {loop:mining%player%} > {@maxminingspeed}:
+        stop
+        send "&6Du  hast mehr als {@max::miningspeed} Miningspeed"
+
       if player has 64 any log and 64 stone in his inventory:
         remove 64 any log and 64 stone from player's inventory
         add {@Sp2} to {loop:mining%player%}
         message "&6Du hast dir eine Steinspitzhacke gekauft!"
+        log "%player% hat eine Steinspitzhacke gekauft [+{@Sp2} Miningspeed]" in "Mininglog.txt"
 
     if clicked slot is 40:
+      if {loop:mining%player%} > {@maxminingspeed}:
+          stop
+          send "&6Du  hast mehr als {@max::miningspeed} Miningspeed"
+
       if player has 64 any log and 64 stone and 64 iron ingots in his inventory:
         remove 64 any log and 64 stone and 64 iron ingots from player's inventory
         add {@Sp3} to {loop:mining%player%}
         message "&6Du hast dir eine Eisenspitzhacke gekauft!"
+        log "%player% hat eine Eisenspitzhacke gekauft [+{@Sp3} Miningspeed]" in "Mininglog.txt"
 
     if clicked slot is 41:
+      if {loop:mining%player%} > {@maxminingspeed}:
+        stop
+        send "&6Du  hast mehr als {@max::miningspeed} Miningspeed"
+
       if player has 64 any log and 64 stone and 64 iron ingot and 64 gold ingot in his inventory:
         remove 64 any log and 64 stone and 64 iron ingot and 64 gold ingot from player's inventory
         add {@Sp4} to {loop:mining%player%}
         message "&6Du hast dir eine Goldspitzhacke gekauft!"
+        log "%player% hat eine Goldpitzhacke gekauft [+{@Sp4} Miningspeed]" in "Mininglog.txt"
 
     if clicked slot is 42:
+      if {loop:mining%player%} > {@maxminingspeed}:
+        stop
+        send "&6Du  hast mehr als {@max::miningspeed} Miningspeed"
+
       if player has 64 any log and 64 stone and 64 iron ingot and 64 diamond and 64 gold ingot in his inventory:
         remove 64 any log and 64 stone and 64 iron ingot and 64 diamond and 64 gold ingot from player's inventory
         add {@Sp5} to {loop:mining%player%}
         message "&6Du hast dir eine Diamantspitzhacke gekauft!"
+        log "%player% hat eine Diamantspitzhacke gekauft [+{@Sp5} Miningspeed]" in "Mininglog.txt"
 
 
 
@@ -324,9 +361,9 @@ every 10 seconds:
 
 
 function mining(p: player):
-  chance of 0.1%:
-    remove 1 from {loop:mining%{_p}%} #<--------Hier fehlt noch was!
-    send "[&6Mining&f] &7Oh, Eine Spitzhacke von dir ist zerbrochen. [&C-1 speed&f]" to {_p}
+  chance of {@RemoveMiningspeedC}%:
+    remove {@RemoveMiningspeed} from {loop:mining%{_p}%} #<--------Hier fehlt noch was!
+    send "[&6Mining&f] &7Oh, Eine Spitzhacke von dir ist zerbrochen. [&C-{@RemoveMiningspeed} speed&f]" to {_p}
 
   Chance of {@diamond}%:
     if {diamond::off::%{_p}%} is lime stained glass pane:
@@ -421,14 +458,15 @@ Command /Miningchest:
 
 every 25 ticks:
   loop all players:
-    if {Scoreboard::%loop-player%} is true:
-      Scoreboard(loop-player)
-     # broadcast "Loop!"
-      if {miningdrop::%loop-player%} is set:
-        set {miningchest::%loop-player%} to "On"
-        stop
-      set {miningchest::%loop-player%} to "Off"
-    stop
+    if {@Scoreboard} is true:
+      if {Scoreboard::%loop-player%} is true:
+        Scoreboard(loop-player)
+       # broadcast "Loop!"
+        if {miningdrop::%loop-player%} is set:
+          set {miningchest::%loop-player%} to "On"
+          stop
+        set {miningchest::%loop-player%} to "Off"
+      stop
 
 
 
