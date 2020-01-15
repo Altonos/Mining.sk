@@ -33,6 +33,21 @@ options:
   diamond: 0.5       #<-- diamond        |Standardwert 16  |
   #--------------------------------------------------------|
 
+  #--------------------------------------------------------------|
+  #! Config für Mining. (Angaben in %)     
+  #                                                              |
+  Mining-redstone: 1      #<-- redstone       |Standardwert 1    |
+  Mining-lapis: 1         #<-- lapis          |Standardwert 1    |
+  Mining-coal: 1          #<-- coal           |Standardwert 1    |
+  Mining-gold: 5          #<-- gold           |Standardwert 5    |
+  Mining-iron: 2          #<-- iron           |Standardwert 2    |
+  Mining-diamond: 40      #<-- diamond        |Standardwert 40   |
+  #--------------------------------------------------------------|
+
+
+
+
+
   #--------------------------------------------------------------------------------------------|
   #! Sonstiges
   #   
@@ -42,6 +57,10 @@ options:
   #! Scoreboard                                                                                            
   Scoreboard: true                                                           |Standardwert true|
   #--------------------------------------------------------------------------------------------|
+
+
+
+
 
 
 
@@ -448,6 +467,52 @@ Command /Miningchest:
 
 
   
+
+
+
+
+
+
+
+
+on mine:
+
+  if event-block is iron ore:
+    chance of {@Mining-iron}%:
+      add 1 to {loop:mining%player%}
+      send "[&6Mining&f]&7 uii, du hast glück +1 Miningspeed" to player
+
+  if event-block is coal ore:
+    chance of {@Mining-coal}%:
+      add 1 to {loop:mining%player%}
+      send "[&6Mining&f]&7 uii, du hast glück +1 Miningspeed" to player
+
+
+  if event-block is gold ore:
+    chance of {@Mining-gold}%:
+      add 1 to {loop:mining%player%}
+      send "[&6Mining&f]&7 uii, du hast glück +1 Miningspeed" to player
+
+  if event-block is lapis ore:
+    chance of {@Mining-lapis}%:
+      add 1 to {loop:mining%player%}
+      send "[&6Mining&f]&7 uii, du hast glück +1 Miningspeed" to player
+
+  if event-block is diamond ore:
+    chance of {@Mining-diamond}%:
+      add 1 to {loop:mining%player%}
+      send "[&6Mining&f]&7 uii, du hast glück +1 Miningspeed" to player
+
+  if event-block is redstone ore:
+    chance of {@Mining-redstone}%:
+      add 1 to {loop:mining%player%}
+      send "[&6Mining&f]&7 uii, du hast glück +1 Miningspeed" to player
+
+
+
+
+
+
 
 
 
